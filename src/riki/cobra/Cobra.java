@@ -59,8 +59,8 @@ public class Cobra {
 		FileMerger.findAllFiles(folders, files).forEach(f -> System.out.println("\t" + f));
 	}
 
-	public void addSubFolders(String path) {
-		folders.addAll(FileMerger.findAllSubFolders(path));
+	public void addSubFolders(String path, List<String> excludes) {
+		folders.addAll(FileMerger.findAllSubFolders(path, excludes));
 	}
 
 }

@@ -13,8 +13,10 @@ use: 'use' (folder|file)+ #useStat
 	;
 	
 folder: 'folder' STRING (',' STRING)* #folders
-	| 'sub' folder	#subFolder
+	| 'sub' folder excludes?	#subFolder
 	;
+
+excludes: 'excludes' STRING (',' STRING)* ;
 
 file: 'file' STRING (',' STRING)*
 	;

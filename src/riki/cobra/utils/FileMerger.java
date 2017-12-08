@@ -26,14 +26,25 @@ public class FileMerger {
 		return result;
 	}
 	
-	public static Set<String> findAllSubFolders(String base){
+	public static Set<String> findAllSubFolders(String base, List<String> excludes){
 		Set<String> result = new HashSet<>();
 		File[] flist = new File(base).listFiles();
 		for(File file : flist) {
 			if(file.isDirectory())
 				try {
-					result.add(file.getCanonicalPath().toString());
-					result.addAll(findAllSubFolders(file.getCanonicalPath().toString()));
+					String cpath = file.getCanonicalPath().toString();
+					boolean skip = false;
+					if(excludes != null)
+						for(String exc : excludes) {
+							if(cpath.matches(exc)) {
+								skip = true;
+								break;
+							}
+						}
+					if(!skip) {
+						result.add(cpath);
+						result.addAll(findAllSubFolders(cpath, excludes));
+					}					
 				} catch (IOException e) {	
 					System.err.println(e.getMessage());
 				}			

@@ -46,6 +46,12 @@ public interface CobraVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSubFolder(CobraParser.SubFolderContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link CobraParser#excludes}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExcludes(CobraParser.ExcludesContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link CobraParser#file}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

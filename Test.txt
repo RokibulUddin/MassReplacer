@@ -1,6 +1,6 @@
 use folder "e:\*\Desktop"
-	sub folder "e:\*\Downloads"
-	file "*.java", "*.pdf"
+	sub folder "c:\Users\*\eclipse-workspace" excludes ".*\.metadata", ".*org.example.*", ".*.recommenders", ".*\.[a-z]+"
+	file "*.java", "*2nd*.pdf"
 {
 	
 }

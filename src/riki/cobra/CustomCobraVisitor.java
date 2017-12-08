@@ -1,6 +1,8 @@
 package riki.cobra;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import riki.cobra.language.CobraBaseVisitor;
@@ -34,9 +36,18 @@ public class CustomCobraVisitor extends CobraBaseVisitor<Object> {
 	
 	@Override
 	public Object visitSubFolder(SubFolderContext ctx) {
-		CobraParser.FoldersContext ftx = (FoldersContext) ctx.folder();
+		CobraParser.FoldersContext ftx = (FoldersContext) ctx.folder();		
+		@SuppressWarnings("unchecked")
 		Set<String> folders = (Set<String>)visitFolders(ftx);
-		folders.forEach(f -> cobra.addSubFolders(f));
+		List<String> excludes = null;
+		if(ctx.excludes() != null) {
+			List<String> tmp = new ArrayList<>(ctx.excludes().STRING().size());
+			ctx.excludes().STRING().forEach(e -> tmp.add(e.getText()));
+			excludes = tmp;
+		}	
+		for(String folder : folders) {
+			cobra.addSubFolders(folder, excludes);
+		}
 		return null;
 	}
 	
