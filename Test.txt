@@ -1,0 +1,6 @@
+use folder "e:\*\Downloads",
+			"e:\*\Desktop"
+	file "e**/*.txt" 
+{
+	
+}
