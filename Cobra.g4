@@ -12,8 +12,8 @@ stat: use '{' '}'
 use: 'use' (folder|file)+ #useStat
 	;
 	
-folder: 'folder' STRING (',' STRING)*
-	| 'sub' folder
+folder: 'folder' STRING (',' STRING)* #folders
+	| 'sub' folder	#subFolder
 	;
 
 file: 'file' STRING (',' STRING)*

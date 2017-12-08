@@ -258,20 +258,36 @@ public class CobraParser extends Parser {
 	}
 
 	public static class FolderContext extends ParserRuleContext {
-		public List<TerminalNode> STRING() { return getTokens(CobraParser.STRING); }
-		public TerminalNode STRING(int i) {
-			return getToken(CobraParser.STRING, i);
-		}
-		public FolderContext folder() {
-			return getRuleContext(FolderContext.class,0);
-		}
 		public FolderContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_folder; }
+	 
+		public FolderContext() { }
+		public void copyFrom(FolderContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class SubFolderContext extends FolderContext {
+		public FolderContext folder() {
+			return getRuleContext(FolderContext.class,0);
+		}
+		public SubFolderContext(FolderContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof CobraVisitor ) return ((CobraVisitor<? extends T>)visitor).visitFolder(this);
+			if ( visitor instanceof CobraVisitor ) return ((CobraVisitor<? extends T>)visitor).visitSubFolder(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class FoldersContext extends FolderContext {
+		public List<TerminalNode> STRING() { return getTokens(CobraParser.STRING); }
+		public TerminalNode STRING(int i) {
+			return getToken(CobraParser.STRING, i);
+		}
+		public FoldersContext(FolderContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CobraVisitor ) return ((CobraVisitor<? extends T>)visitor).visitFolders(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -285,6 +301,7 @@ public class CobraParser extends Parser {
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__3:
+				_localctx = new FoldersContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(26);
@@ -310,6 +327,7 @@ public class CobraParser extends Parser {
 				}
 				break;
 			case T__5:
+				_localctx = new SubFolderContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(35);

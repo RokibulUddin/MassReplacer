@@ -1,6 +1,6 @@
-use folder "e:\*\Downloads",
-			"e:\*\Desktop"
-	file "e**/*.txt" 
+use folder "e:\*\Desktop"
+	sub folder "e:\*\Downloads"
+	file "*.java", "*.pdf"
 {
 	
 }

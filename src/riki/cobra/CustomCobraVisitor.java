@@ -1,7 +1,12 @@
 package riki.cobra;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import riki.cobra.language.CobraBaseVisitor;
 import riki.cobra.language.CobraParser;
+import riki.cobra.language.CobraParser.FoldersContext;
+import riki.cobra.language.CobraParser.SubFolderContext;
 
 public class CustomCobraVisitor extends CobraBaseVisitor<Object> {
 	private Cobra cobra;
@@ -17,10 +22,21 @@ public class CustomCobraVisitor extends CobraBaseVisitor<Object> {
 	}
 	
 	@Override
-	public Object visitFolder(CobraParser.FolderContext ctx) {
+	public Object visitFolders(CobraParser.FoldersContext ctx) {
+		Set<String> result = new HashSet<>();
 		if(ctx.STRING() != null) {
-			ctx.STRING().forEach(s -> cobra.addFolder(s.getText()));
+			ctx.STRING().forEach(s -> {
+				result.addAll(cobra.addFolder(s.getText()));				
+			});
 		}		
+		return result;
+	}
+	
+	@Override
+	public Object visitSubFolder(SubFolderContext ctx) {
+		CobraParser.FoldersContext ftx = (FoldersContext) ctx.folder();
+		Set<String> folders = (Set<String>)visitFolders(ftx);
+		folders.forEach(f -> cobra.addSubFolders(f));
 		return null;
 	}
 	

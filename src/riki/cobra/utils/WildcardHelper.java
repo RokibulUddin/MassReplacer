@@ -1,8 +1,8 @@
 package riki.cobra.utils;
 
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.tools.ant.DirectoryScanner;
 
@@ -15,9 +15,9 @@ public class WildcardHelper
 	 * @param p
 	 * @return retituisce cartelle esistenti tipo "path\ciao\path2", "path\ciao2\path2"
 	 */
-	public static List<String> solveFolder(String p)
+	public static Set<String> solveFolder(String p)
 	{		
-		List<String> result;
+		Set<String> result;
 		String[] splitted = p.split("\\*");
 		
 		if(splitted[0].isEmpty()) {
@@ -31,7 +31,7 @@ public class WildcardHelper
 		scanner.setIncludes(new String[] {"**" + splitted[1]});
 		scanner.scan();
 		String[] dirs = scanner.getIncludedDirectories();
-		result = new ArrayList<>(dirs.length);
+		result = new HashSet<>(dirs.length);
 		for(String s : dirs) {
 			result.add(Paths.get(splitted[0], s).toString());
 		}
