@@ -19,12 +19,12 @@ public class WildcardHelper
 	{		
 		Set<String> result;
 		String[] splitted = p.split("\\*");
-		
+
 		if(splitted[0].isEmpty()) {
 			System.err.println("* char cannot be as first element! Skipping folder " + p);
 			return null;
 		}		
-		
+
 		DirectoryScanner scanner = new DirectoryScanner();
 		scanner.setBasedir(splitted[0]);
 		scanner.setCaseSensitive(Cobra.CASESENSITIVE);

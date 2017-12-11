@@ -3,6 +3,7 @@ package riki.cobra.utils;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,20 +14,21 @@ import org.apache.tools.ant.DirectoryScanner;
 import riki.cobra.Cobra;
 
 public class FileMerger {
-	public static List<String> findAllFiles(Set<String> folders, List<String> files){
+	public static List<String> findAllFiles(Set<String> folders, Collection<String> files, Collection<String> filesToExclude){
 		List<String> result = new LinkedList<>();
 		DirectoryScanner scanner = new DirectoryScanner();
 		scanner.setIncludes(files.toArray(new String[] {}));
 		folders.forEach(folder -> {			
 			scanner.setBasedir(folder);
 			scanner.setCaseSensitive(Cobra.CASESENSITIVE);
-			scanner.scan();			
+			scanner.setExcludes(filesToExclude.toArray(new String[] {}));
+			scanner.scan();	
 			result.addAll(Arrays.asList(scanner.getIncludedFiles()));
 		});
 		return result;
 	}
 	
-	public static Set<String> findAllSubFolders(String base, List<String> excludes){
+	public static Set<String> findAllSubFolders(String base, Collection<String> excludes){
 		Set<String> result = new HashSet<>();
 		File[] flist = new File(base).listFiles();
 		for(File file : flist) {

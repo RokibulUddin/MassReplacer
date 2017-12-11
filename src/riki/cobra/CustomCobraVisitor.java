@@ -7,6 +7,7 @@ import java.util.Set;
 
 import riki.cobra.language.CobraBaseVisitor;
 import riki.cobra.language.CobraParser;
+import riki.cobra.language.CobraParser.ExcludesContext;
 import riki.cobra.language.CobraParser.FoldersContext;
 import riki.cobra.language.CobraParser.SubFolderContext;
 
@@ -34,28 +35,39 @@ public class CustomCobraVisitor extends CobraBaseVisitor<Object> {
 		return result;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public Object visitSubFolder(SubFolderContext ctx) {
 		CobraParser.FoldersContext ftx = (FoldersContext) ctx.folder();		
-		@SuppressWarnings("unchecked")
 		Set<String> folders = (Set<String>)visitFolders(ftx);
-		List<String> excludes = null;
-		if(ctx.excludes() != null) {
-			List<String> tmp = new ArrayList<>(ctx.excludes().STRING().size());
-			ctx.excludes().STRING().forEach(e -> tmp.add(e.getText()));
-			excludes = tmp;
-		}	
+		Set<String> excludes = (Set<String>)visitExcludes(ctx.excludes());
 		for(String folder : folders) {
 			cobra.addSubFolders(folder, excludes);
 		}
 		return null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public Object visitFile(CobraParser.FileContext ctx) {
 		if(ctx.STRING() != null) {
-			ctx.STRING().forEach(s -> cobra.addFile(s.getText()));
+			Set<String> excludes = (Set<String>)visitExcludes(ctx.excludes());	
+			cobra.addFilesRuleToExclude(excludes);
+			ctx.STRING().forEach(file -> cobra.addFile(file.getText()));
 		}
 		return null;
+	}
+	
+	@Override
+	public Object visitExcludes(ExcludesContext ctx) {
+		Set<String> result = null;
+		if(ctx != null)
+		{
+			result = new HashSet<>(ctx.STRING().size());
+			List<String> tmp = new ArrayList<>(ctx.STRING().size());
+			ctx.STRING().forEach(e -> tmp.add(e.getText()));
+			result.addAll(tmp);
+		}
+		return result;
 	}
 }

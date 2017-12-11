@@ -3,6 +3,7 @@ package riki.cobra;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,10 +17,12 @@ public class Cobra {
 	private static final String WILDCARD = "*";
 	private Set<String> folders;
 	private List<String> files;
+	private Set<String> filesRuleToExclude;
 
 	public Cobra() {
 		folders = new HashSet<>();
 		files = new LinkedList<>();
+		filesRuleToExclude = new HashSet<>();
 	}
 
 	public Set<String> addFolder(String f) {
@@ -48,6 +51,15 @@ public class Cobra {
 	public void addFile(String f) {
 		files.add(f);
 	}
+	
+	public void addFile(Collection<String> files) {
+		files.addAll(files);
+	}
+	
+	public void addFilesRuleToExclude(Set<String> filesRuleToExclude) {
+		if(filesRuleToExclude != null)
+			this.filesRuleToExclude.addAll(filesRuleToExclude);
+	}
 
 	public void printFileAndFolders() {
 		System.out.println("Folders:");
@@ -56,10 +68,10 @@ public class Cobra {
 		files.forEach(f -> System.out.println("\t"+f));
 		
 		System.out.println("Result:");
-		FileMerger.findAllFiles(folders, files).forEach(f -> System.out.println("\t" + f));
+		FileMerger.findAllFiles(folders, files, filesRuleToExclude).forEach(f -> System.out.println("\t" + f));
 	}
 
-	public void addSubFolders(String path, List<String> excludes) {
+	public void addSubFolders(String path, Collection<String> excludes) {
 		folders.addAll(FileMerger.findAllSubFolders(path, excludes));
 	}
 

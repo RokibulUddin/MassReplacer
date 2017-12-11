@@ -18,7 +18,7 @@ folder: 'folder' STRING (',' STRING)* #folders
 
 excludes: 'excludes' STRING (',' STRING)* ;
 
-file: 'file' STRING (',' STRING)*
+file: 'file' STRING (',' STRING)* excludes?
 	;
 
 STRING: '"' .*? '"' {setText(getText().substring(1, getText().length()-1));}; 
