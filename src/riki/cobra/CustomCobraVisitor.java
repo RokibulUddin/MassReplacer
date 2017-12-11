@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.antlr.v4.runtime.tree.TerminalNode;
+
 import riki.cobra.language.CobraBaseVisitor;
 import riki.cobra.language.CobraParser;
 import riki.cobra.language.CobraParser.ExcludesContext;
@@ -53,7 +55,7 @@ public class CustomCobraVisitor extends CobraBaseVisitor<Object> {
 		if(ctx.STRING() != null) {
 			Set<String> excludes = (Set<String>)visitExcludes(ctx.excludes());	
 			cobra.addFilesRuleToExclude(excludes);
-			ctx.STRING().forEach(file -> cobra.addFile(file.getText()));
+			ctx.STRING().stream().map(TerminalNode::getText).forEach(cobra::addFile);
 		}
 		return null;
 	}
