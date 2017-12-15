@@ -4,8 +4,8 @@ A language prototype for manipulate text and xml files
 
 ```
 use folder "e:\*\Desktop"
-	sub folder "c:\Users\*\eclipse-workspace" excludes ".*\.metadata", ".*org.example.*", ".*.recommenders", ".*\.[a-z]+"
-	file "*.java", "*2nd*.pdf" excludes "CSV*", "Array*"
+	sub folder "c:\Users\*\eclipse-workspace" exclude ".*\.metadata", ".*org.example.*", ".*.recommenders", ".*\.[a-z]+"
+	file "*.java", "*2nd*.pdf" exclude "CSV*", "Array*"
 {
 	
 }
