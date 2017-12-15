@@ -64,17 +64,23 @@ public interface CobraVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitInstructions(CobraParser.InstructionsContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link CobraParser#atomic}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAtomic(CobraParser.AtomicContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link CobraParser#assignment}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitAssignment(CobraParser.AssignmentContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link CobraParser#array}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArray(CobraParser.ArrayContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link CobraParser#atomic}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAtomic(CobraParser.AtomicContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link CobraParser#string}.
 	 * @param ctx the parse tree

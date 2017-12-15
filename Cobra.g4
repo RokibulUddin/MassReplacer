@@ -25,11 +25,14 @@ file: 'file' atomic (',' atomic)* excludes?
 	
 instructions: assignment ;
 
+assignment: ID '=' atomic;
+
+array: '[' atomic+ (',' atomic)* ']' ;
+
 atomic: string
+	| array
 	| ID
 	;
-
-assignment: ID '=' string ;
 
 string : STRING;
 

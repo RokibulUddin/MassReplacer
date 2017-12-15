@@ -3,6 +3,7 @@ package riki.cobra;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,6 +12,7 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 
 import riki.cobra.language.CobraBaseVisitor;
 import riki.cobra.language.CobraParser;
+import riki.cobra.language.CobraParser.ArrayContext;
 import riki.cobra.language.CobraParser.AssignmentContext;
 import riki.cobra.language.CobraParser.AtomicContext;
 import riki.cobra.language.CobraParser.ExcludesContext;
@@ -85,8 +87,8 @@ public class CustomCobraVisitor extends CobraBaseVisitor<Object> {
 	public Object visitAssignment(AssignmentContext ctx) {
 		String id = ctx.ID().getText();
 		Object result = null;
-		if(ctx.string() != null) {
-			result = visitString(ctx.string());
+		if(ctx.atomic() != null) {
+			result = visitAtomic(ctx.atomic());
 			memory.put(id, new Variable<String>((String)result));
 		}
 		return result;
@@ -110,20 +112,6 @@ public class CustomCobraVisitor extends CobraBaseVisitor<Object> {
 				result = result.replace(toReplace, value);	
 			}while((start = result.indexOf("${", end)) >= 0);
 		}
-
-		//		if(result.contains("${")) {
-		//			boolean varFound = false;
-		//			for(String id : memory.keySet())
-		//			{
-		//				String toReplace = "${" + id + "}";
-		//				String value = getVariable(id, ctx.STRING());
-		//				result = result.replace(toReplace, value);
-		//				varFound = true;
-		//			}	
-		//			if(!varFound) {
-		//				exitVarNotFount(result.substring(result.indexOf("${"), result.indexOf("}")), ctx.STRING());
-		//			}
-		//		}	
 		return result;
 	}
 
@@ -133,7 +121,22 @@ public class CustomCobraVisitor extends CobraBaseVisitor<Object> {
 		if(ctx.ID() != null) {
 			return getVariable(ctx.ID());
 		}
+		if(ctx.array() != null) {
+			return visitArray(ctx.array());
+		}
 		return null;
+	}
+	
+	public String visitArray(ArrayContext ctx) {
+		StringBuilder sb = new StringBuilder();
+		Iterator<AtomicContext> i = ctx.atomic().iterator();
+		while(i.hasNext()) {
+			AtomicContext atomic = i.next();
+			sb.append(visitAtomic(atomic));
+			if(i.hasNext())
+				sb.append(", ");
+		}
+		return sb.toString();
 	}
 
 	private String getVariable(TerminalNode ID) {
