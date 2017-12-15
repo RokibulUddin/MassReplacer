@@ -11,7 +11,7 @@ import riki.cobra.language.CobraParser;
 
 public class Test {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException {		
 		FileInputStream fs = new FileInputStream("Test.txt");
 		ANTLRInputStream input = new ANTLRInputStream(fs);
 		CobraLexer lexer = new CobraLexer(input);

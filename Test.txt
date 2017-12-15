@@ -1,6 +1,8 @@
+$USER_FOLDER = "c:\Users"
+
 use folder "e:\*\Desktop"
-	sub folder "c:\Users\*\eclipse-workspace" excludes ".*\.metadata", ".*org.example.*", ".*.recommenders", ".*\.[a-z]+"
-	file "*.java", "*2nd*.pdf" excludes "CSV*", "Array*"
+	sub folder "${USER_FOLDER}\*\eclipse-workspace" exclude ".*\.metadata", ".*org.example.*", ".*.recommenders", ".*\.[a-z]+"
+	file "*.java", "*2nd*.pdf" exclude "CSV*", "Array*"
 {
 	
 }
