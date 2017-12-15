@@ -1,6 +1,7 @@
 package riki.cobra;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -77,7 +78,7 @@ public class CustomCobraVisitor extends CobraBaseVisitor<Object> {
 		{
 			result = new HashSet<>(ctx.atomic().size());
 			List<String> tmp = new ArrayList<>(ctx.atomic().size());
-			ctx.atomic().forEach(e -> tmp.add(visitAtomic(e)));
+			ctx.atomic().forEach(e -> tmp.addAll(Arrays.asList(visitAtomic(e).split(","))));
 			result.addAll(tmp);
 		}
 		return result;
@@ -134,7 +135,7 @@ public class CustomCobraVisitor extends CobraBaseVisitor<Object> {
 			AtomicContext atomic = i.next();
 			sb.append(visitAtomic(atomic));
 			if(i.hasNext())
-				sb.append(", ");
+				sb.append(",");
 		}
 		return sb.toString();
 	}

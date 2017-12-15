@@ -1,5 +1,6 @@
 $USER_FOLDER = "c:\Users"
-$EXCLUDE_FILES = ["CSV*", "Array*"]
+$AA = "Array*"
+$EXCLUDE_FILES = ["CSV*", $AA]
 
 use folder "e:\*\Desktop"
 	sub folder "${USER_FOLDER}\*\eclipse-workspace" exclude ".*\.metadata", ".*org.example.*", ".*.recommenders", ".*\.[a-z]+"

@@ -18,10 +18,11 @@ public class FileMerger {
 		List<String> result = new LinkedList<>();
 		DirectoryScanner scanner = new DirectoryScanner();
 		scanner.setIncludes(files.toArray(new String[] {}));
+		scanner.setCaseSensitive(Cobra.CASESENSITIVE);
+		String[] toExcludes = filesToExclude.toArray(new String[filesToExclude.size()]);
+		scanner.setExcludes(toExcludes);
 		folders.forEach(folder -> {			
-			scanner.setBasedir(folder);
-			scanner.setCaseSensitive(Cobra.CASESENSITIVE);
-			scanner.setExcludes(filesToExclude.toArray(new String[] {}));
+			scanner.setBasedir(folder);				
 			scanner.scan();	
 			result.addAll(Arrays.asList(scanner.getIncludedFiles()));
 		});
