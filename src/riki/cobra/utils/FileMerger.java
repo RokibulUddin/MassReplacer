@@ -2,8 +2,9 @@ package riki.cobra.utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -15,6 +16,10 @@ import org.apache.tools.ant.DirectoryScanner;
 import riki.cobra.Cobra;
 
 public class FileMerger {
+	public static String MIME = "text";
+	// Select only text type file
+	public static boolean MIME_FILTER_ENABLED = true;
+	
 	public static List<String> findAllFiles(Set<String> folders, Collection<String> files, Collection<String> filesToExclude){
 		List<String> result = new LinkedList<>();
 		DirectoryScanner scanner = new DirectoryScanner();
@@ -27,7 +32,17 @@ public class FileMerger {
 			scanner.scan();	
 			for(String f : scanner.getIncludedFiles())
 			{
-				result.add(Paths.get(folder, f).toAbsolutePath().toString());
+				Path p = Paths.get(folder, f);
+				try {
+					if(MIME_FILTER_ENABLED && Files.probeContentType(p).contains(MIME)) {
+						result.add(p.toAbsolutePath().toString());
+					}						
+					if(!MIME_FILTER_ENABLED){
+						result.add(p.toAbsolutePath().toString());
+					}
+				} catch (IOException e) {
+					System.err.println(p.toAbsolutePath().toString() + ": " + e.getMessage());
+				}
 			}
 		});
 		return result;
