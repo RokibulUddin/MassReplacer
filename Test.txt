@@ -1,10 +1,9 @@
-$USER_FOLDER = "c:\Users"
-$AA = "Array*"
-$EXCLUDE_FILES = ["CSV*", $AA]
+$TEST_FOLDER = "e:\Users\ruddin\Desktop\testcobra"
 
-use folder "e:\*\Desktop"
-	sub folder "${USER_FOLDER}\*\eclipse-workspace" exclude ".*\.metadata", ".*org.example.*", ".*.recommenders", ".*\.[a-z]+"
-	file "*.java", "*2nd*.pdf" exclude $EXCLUDE_FILES
+use folder $TEST_FOLDER file "*.txt"
 {
-	
+	$NOME = "Pavone"
+	$NUOVO_NOME = "<$NOME> Pazzo"
+
+	replace "({H}\d\d):(\d\d):(\d\d)", "hour=${H}, minutes=$2, sec=$3 <$NUOVO_NOME>"
 }

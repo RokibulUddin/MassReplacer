@@ -23,7 +23,11 @@ excludes: 'exclude' atomic (',' atomic)* ;
 file: 'file' atomic (',' atomic)* excludes?
 	;
 	
-instructions: assignment ;
+instructions: assignment 
+	|	replace
+	;
+
+replace: 'replace' tofind ',' replacewith ;
 
 assignment: ID '=' atomic;
 
@@ -33,6 +37,9 @@ atomic: string
 	| array
 	| ID
 	;
+	
+tofind: atomic (',' atomic)*;
+replacewith: atomic;
 
 string : STRING;
 

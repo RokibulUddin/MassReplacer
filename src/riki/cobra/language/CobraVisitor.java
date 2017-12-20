@@ -64,6 +64,12 @@ public interface CobraVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitInstructions(CobraParser.InstructionsContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link CobraParser#replace}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitReplace(CobraParser.ReplaceContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link CobraParser#assignment}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -81,6 +87,18 @@ public interface CobraVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitAtomic(CobraParser.AtomicContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link CobraParser#tofind}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTofind(CobraParser.TofindContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link CobraParser#replacewith}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitReplacewith(CobraParser.ReplacewithContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link CobraParser#string}.
 	 * @param ctx the parse tree

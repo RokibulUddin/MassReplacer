@@ -2,6 +2,7 @@ package riki.cobra.utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -24,7 +25,10 @@ public class FileMerger {
 		folders.forEach(folder -> {			
 			scanner.setBasedir(folder);				
 			scanner.scan();	
-			result.addAll(Arrays.asList(scanner.getIncludedFiles()));
+			for(String f : scanner.getIncludedFiles())
+			{
+				result.add(Paths.get(folder, f).toAbsolutePath().toString());
+			}
 		});
 		return result;
 	}

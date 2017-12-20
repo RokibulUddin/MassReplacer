@@ -9,3 +9,38 @@ Search on folder for example e:\Users\ruddin\Desktop or every else that match li
 search on sub folder of c:\Users\*\eclipse-workspace (same criteria as previous) excluding all regex expression from the path
 match only file ending for .java and .pdf that contain 2nd in the filename
 --------
+
+$USER_FOLDER = "c:\Users"
+$AA = ["Array*", "XML*"]
+$EXCLUDE_FILES = ["CSV*", $AA]
+
+use folder "e:\*\Desktop"
+	sub folder "<$USER_FOLDER>\*\eclipse-workspace" 
+		exclude ".*\.metadata", 
+				".*org.example.*", 
+				".*.recommenders", 
+				".*\.[a-z]+"
+	file "*.java", "*2nd*.pdf" exclude $EXCLUDE_FILES, "Test.java"
+{
+	$NOME = "Riki"
+	replace $NOME, "Pavone"
+}
+
+-------
+
+
+-------
+
+$TEST_FOLDER = "e:\Users\ruddin\Desktop\testcobra"
+
+use folder $TEST_FOLDER file "*.txt"
+{
+	$NOME = "Pavone"
+	$NUOVO_NOME = "<$NOME> Pazzo"
+	
+	replace "({H}\d\d):(\d\d):(\d\d)", "hour=${H}, minutes=$2, sec=$3 <$NUOVO_NOME>"
+}
+--------
+replace for example "11:12:30" with "hour=11, minutes=12, sec=30 Pavone Pazzo"
+Notice replace by name using ${Name} or by group index with $Number
+--------
