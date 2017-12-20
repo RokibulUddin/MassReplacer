@@ -84,9 +84,7 @@ public class Cobra {
 		
 		System.out.println("Result:");
 		filesPath = FileMerger.findAllFiles(folders, files, filesRuleToExclude);
-		filesPath.forEach(f -> {
-			System.out.println("\t" + f);			
-		});
+		filesPath.forEach(f -> System.out.println("\t" + f));
 		
 		massReplace();
 	}
