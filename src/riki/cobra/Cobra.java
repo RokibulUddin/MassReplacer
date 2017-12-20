@@ -58,20 +58,20 @@ public class Cobra {
 	public void addFile(String f) {
 		files.add(f);
 	}
-	
+
 	public void addFile(Collection<String> files) {
 		files.addAll(files);
 	}
-	
+
 	public void addFilesRuleToExclude(Set<String> filesRuleToExclude) {
 		if(filesRuleToExclude != null)
 			this.filesRuleToExclude.addAll(filesRuleToExclude);
 	}
-	
+
 	public void addReplaceInstruction(List<String> replace, String with) {
 		this.replaceInst.add(new ReplaceInfo(replace, with));
 	}
-	
+
 	public void addReplaceInstruction(ReplaceInfo info) {
 		this.replaceInst.add(info);
 	}
@@ -81,18 +81,20 @@ public class Cobra {
 		folders.forEach(f -> System.out.println("\t"+f));
 		System.out.println("Files:");
 		files.forEach(f -> System.out.println("\t"+f));
-		
+
 		System.out.println("Result:");
 		filesPath = FileMerger.findAllFiles(folders, files, filesRuleToExclude);
 		filesPath.forEach(f -> System.out.println("\t" + f));
-		
+
 		massReplace();
 	}
-	
+
 	private void massReplace() {
-		ReplaceExecutor rexec = new ReplaceExecutor(replaceInst);
-		filesPath.forEach(f -> rexec.replace(new SimpleTextReplacer(f)));
-		rexec.shutdown();
+		if(!replaceInst.isEmpty()) {
+			ReplaceExecutor rexec = new ReplaceExecutor(replaceInst);
+			filesPath.forEach(f -> rexec.replace(new SimpleTextReplacer(f)));
+			rexec.shutdown();
+		}
 	}
 
 	public void addSubFolders(String path, Collection<String> excludes) {
