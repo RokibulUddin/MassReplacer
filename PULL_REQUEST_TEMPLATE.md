@@ -1,32 +1,33 @@
-# How to contribute
+# Description
 
-I'm really glad you're reading this, because we need volunteer developers to help this project come to fruition.
+Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context. List any dependencies that are required for this change.
 
-If you haven't already, you can write me at lol.riki@gmail.com. We want you working on things you're excited about.
+Fixes # (issue)
 
-## Testing & Code Optimizing & Documentation
+## Type of change
 
-At the current state, we don't have any test! So we need somebody who write tests.
-Fell free to optimize code, add comments etc
-We need also somebody able to write a good documentation and guide/tutorial.
+Please delete options that are not relevant or put x on relevant options.
 
-## Submitting changes
+- [ ] Bug fix (non-breaking change which fixes an issue)
+- [ ] New feature (non-breaking change which adds functionality)
+- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- [ ] This change requires a documentation update
+- [ ] Code optimization
+- [ ] Comments
+- [ ] Documentation 
 
-Please send a [GitHub Pull Request to cobra](https://github.com/riki420/cobra/pull/new/master) with a clear list of what you've done (read more about [pull requests](http://help.github.com/pull-requests/)). When you send a pull request, we will love you forever if you include some examples. We can always use more test coverage. Please follow our coding conventions (below) and make sure all of your commits are atomic (one feature per commit).
+# How Has This Been Tested?
 
-Always write a clear log message for your commits. One-line messages are fine for small changes, but bigger changes should look like this:
+Please describe the tests that you ran to verify your changes. Provide instructions so we can reproduce. Please also list any relevant details for your test configuration
 
-    $ git commit -m "A brief summary of the commit
-    > 
-    > A paragraph describing what changed and its impact."
+- [ ] Test A
+- [ ] Test B
 
-## Coding conventions
+# Checklist:
 
-Start reading our code and you'll get the hang of it. We optimize for readability:
-
-  * We indent using four spaces 
-  * We ALWAYS put spaces after list items and method parameters (`[1, 2, 3]`, not `[1,2,3]`), around operators (`x += 1`, not `x+=1`), and around hash arrows.
-  * This is open source software. Consider the people who will read your code, and make it look nice for them. It's sort of like driving a car: Perhaps you love doing donuts when you're alone, but with passengers the goal is to make the ride as smooth as possible.
-
-Thanks,
-Rokibul Uddin
+- [ ] My code follows the style guidelines of this project
+- [ ] I have performed a self-review of my own code
+- [ ] I have commented my code, particularly in hard-to-understand areas
+- [ ] My changes generate no new warnings
+- [ ] New and existing unit tests pass locally with my changes
+- [ ] Any dependent changes have been merged and published in downstream modules
