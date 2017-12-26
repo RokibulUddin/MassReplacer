@@ -1,7 +1,9 @@
 $TEST_FOLDER = "C:\Users\Riki\Desktop\testcobra"
 
-use folder $TEST_FOLDER file "*.txt"
-{
+backup on "C:\Users\Riki\Desktop\testcobra\backup"
 
-	replace "\"HOLA\"", "\nViva la vita"
+use file "*.txt"
+{
+	replace "pera", "pera"
+	replace "melone", "melone"
 }

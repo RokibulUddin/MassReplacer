@@ -19,6 +19,7 @@ import riki.cobra.language.CobraParser;
 import riki.cobra.language.CobraParser.ArrayContext;
 import riki.cobra.language.CobraParser.AssignmentContext;
 import riki.cobra.language.CobraParser.AtomicContext;
+import riki.cobra.language.CobraParser.BackuponContext;
 import riki.cobra.language.CobraParser.ExcludesContext;
 import riki.cobra.language.CobraParser.ExitContext;
 import riki.cobra.language.CobraParser.FoldersContext;
@@ -27,7 +28,7 @@ import riki.cobra.language.CobraParser.StringContext;
 import riki.cobra.language.CobraParser.SubFolderContext;
 
 public class CustomCobraVisitor extends CobraBaseVisitor<Object> {
-	private Cobra cobra;
+	private Cobra cobra = Cobra.getInstance();
 	public static String INNER_VAR_DELIM_START = "<$";
 	public static String INNER_VAR_DELIM_END = ">";
 	private Map<String, Variable<?>> memory = new HashMap<String, Variable<?>>();
@@ -38,7 +39,6 @@ public class CustomCobraVisitor extends CobraBaseVisitor<Object> {
 
 	@Override
 	public Object visitUseStat(CobraParser.UseStatContext ctx) {
-		this.cobra = Cobra.getInstance();
 		return visitChildren(ctx);
 	}
 
@@ -192,6 +192,13 @@ public class CustomCobraVisitor extends CobraBaseVisitor<Object> {
 	public Object visitExit(ExitContext ctx) {
 		cobra.getStack().addCmd(new ExitCmd());
 		return null;
+	}
+	
+	@Override
+	public Object visitBackupon(BackuponContext ctx) {
+		String path = visitString(ctx.string());
+		cobra.enableBackup(path);
+		return path;
 	}
 	
 }

@@ -20,7 +20,10 @@ public class FileMerger {
 	// Select only text type file
 	public static boolean MIME_FILTER_ENABLED = true;
 	
-	public static List<String> findAllFiles(Set<String> folders, Collection<String> files, Collection<String> filesToExclude){
+	public static List<String> findAllFiles(Set<String> folders, Collection<String> files, Collection<String> filesToExclude){		
+		if(folders.isEmpty()){
+			folders.add(System.getProperty("user.dir"));
+		}		
 		List<String> result = new LinkedList<>();
 		DirectoryScanner scanner = new DirectoryScanner();
 		scanner.setIncludes(files.toArray(new String[] {}));

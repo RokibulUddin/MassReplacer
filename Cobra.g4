@@ -8,8 +8,11 @@ cobra: stat+;
 
 stat: use '{' instructions* '}'
 	| assignment
+	| backup
 	;
 	
+backup: 'backup' 'on' string #backupon
+	;
 
 use: 'use' (folder|file)+ #useStat
 	;

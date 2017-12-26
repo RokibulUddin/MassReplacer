@@ -1,7 +1,9 @@
 package riki.cobra;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.HashSet;
@@ -21,6 +23,8 @@ public class Cobra {
 	private Set<String> filesRuleToExclude;
 	private List<String> filesPath;
 	private CmdStack stack;
+	private boolean backup = false;
+	private Path backupPath;	
 	private static Cobra instance = new Cobra();
 
 	private Cobra() {
@@ -94,5 +98,30 @@ public class Cobra {
 	public void addSubFolders(String path, Collection<String> excludes) {
 		folders.addAll(FileMerger.findAllSubFolders(path, excludes));
 	}
+	
+	public void enableBackup(String path){
+		try {
+			File dir = new File(path);
+			if(!dir.isDirectory()){
+				if(!dir.mkdirs()){
+					throw new RuntimeException("Impossible to create folder " + path);
+				}
+			}
+		} catch (Exception e) {
+			System.err.println("Backup option error: " + e.getMessage());
+			System.exit(1);
+		}
+		this.backup = true;
+		this.backupPath = Paths.get(path);
+	}
+	
+	public boolean isBackupEnabled() {
+		return backup;
+	}
+
+	public Path getBackupPath() {
+		return backupPath;
+	}
+
 
 }

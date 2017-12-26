@@ -25,6 +25,13 @@ public interface CobraVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStat(CobraParser.StatContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code backupon}
+	 * labeled alternative in {@link CobraParser#backup}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBackupon(CobraParser.BackuponContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code useStat}
 	 * labeled alternative in {@link CobraParser#use}.
 	 * @param ctx the parse tree

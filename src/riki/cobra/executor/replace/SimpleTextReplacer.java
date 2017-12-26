@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.regex.PatternSyntaxException;
 
 import jregex.Pattern;
+import riki.cobra.executor.BackupExecutor;
 
 public class SimpleTextReplacer extends Replacer {
 	private Charset charset = StandardCharsets.UTF_8;
@@ -41,11 +42,12 @@ public class SimpleTextReplacer extends Replacer {
 					}
 				}
 			}
-			if(changed)
+			if(changed){
+				BackupExecutor.backup(path);
 				Files.write(path, content.getBytes(charset));
+			}
 		}catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
 	}
-
 }
