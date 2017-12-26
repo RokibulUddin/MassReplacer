@@ -11,6 +11,8 @@ import java.util.Set;
 
 import org.antlr.v4.runtime.tree.TerminalNode;
 
+import riki.cobra.cmd.ExitCmd;
+import riki.cobra.cmd.ReplaceCmd;
 import riki.cobra.executor.replace.ReplaceInfo;
 import riki.cobra.language.CobraBaseVisitor;
 import riki.cobra.language.CobraParser;
@@ -18,6 +20,7 @@ import riki.cobra.language.CobraParser.ArrayContext;
 import riki.cobra.language.CobraParser.AssignmentContext;
 import riki.cobra.language.CobraParser.AtomicContext;
 import riki.cobra.language.CobraParser.ExcludesContext;
+import riki.cobra.language.CobraParser.ExitContext;
 import riki.cobra.language.CobraParser.FoldersContext;
 import riki.cobra.language.CobraParser.ReplaceContext;
 import riki.cobra.language.CobraParser.StringContext;
@@ -35,7 +38,7 @@ public class CustomCobraVisitor extends CobraBaseVisitor<Object> {
 
 	@Override
 	public Object visitUseStat(CobraParser.UseStatContext ctx) {
-		this.cobra = new Cobra();
+		this.cobra = Cobra.getInstance();
 		return visitChildren(ctx);
 	}
 
@@ -156,7 +159,7 @@ public class CustomCobraVisitor extends CobraBaseVisitor<Object> {
 		replaceWith = visitAtomic(ctx.replacewith().atomic());
 		info.setReplaceWith(replaceWith);
 		info.setToReplace(toReplace);
-		cobra.addReplaceInstruction(info);
+		cobra.getStack().addCmd(new ReplaceCmd(info));
 		return info;
 	}
 	
@@ -183,6 +186,12 @@ public class CustomCobraVisitor extends CobraBaseVisitor<Object> {
 	private void exitError(String msg, int line, int position) {
 		System.err.println(msg + " (Line: " + line + ", Position: " + position + ")");
 		System.exit(1);
+	}
+	
+	@Override
+	public Object visitExit(ExitContext ctx) {
+		cobra.getStack().addCmd(new ExitCmd());
+		return null;
 	}
 	
 }

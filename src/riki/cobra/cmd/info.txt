@@ -1,0 +1,5 @@
+Ogni comando deve implementare l'interfaccia CobraCmd, che ha due metodi:
+1) process() : esecuzione effettiva
+2) addToCmd : serve a modificare lo stack a piacere
+I comandi vengono aggiunti a CmdStack e poi eseguiti di fila. 
+Per esempio, ReplaceCmd non aggiunge un elemento per ogni chiamata ma aggiunge ReplaceExecCmd allo stack e poi manipola sempre tale oggetto.

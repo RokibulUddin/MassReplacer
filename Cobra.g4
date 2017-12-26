@@ -25,6 +25,11 @@ file: 'file' atomic (',' atomic)* excludes?
 	
 instructions: assignment 
 	|	replace
+	| 	cmd
+	;
+
+// Single commands
+cmd: 'exit' #exit
 	;
 
 replace: 'replace' tofind ',' replacewith ;

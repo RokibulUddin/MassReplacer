@@ -3,16 +3,13 @@ package riki.cobra;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import riki.cobra.executor.ReplaceExecutor;
-import riki.cobra.executor.replace.ReplaceInfo;
-import riki.cobra.executor.replace.SimpleTextReplacer;
+import riki.cobra.cmd.CmdStack;
 import riki.cobra.utils.FileMerger;
 import riki.cobra.utils.WildcardHelper;
 
@@ -22,14 +19,19 @@ public class Cobra {
 	private Set<String> folders;
 	private List<String> files;
 	private Set<String> filesRuleToExclude;
-	private List<ReplaceInfo> replaceInst;
 	private List<String> filesPath;
+	private CmdStack stack;
+	private static Cobra instance = new Cobra();
 
-	public Cobra() {
+	private Cobra() {
 		folders = new HashSet<>();
 		files = new LinkedList<>();
 		filesRuleToExclude = new HashSet<>();
-		replaceInst = new ArrayList<>();
+		stack = new CmdStack();
+	}
+	
+	public static Cobra getInstance(){
+		return instance;
 	}
 
 	public Set<String> addFolder(String f) {
@@ -68,14 +70,6 @@ public class Cobra {
 			this.filesRuleToExclude.addAll(filesRuleToExclude);
 	}
 
-	public void addReplaceInstruction(List<String> replace, String with) {
-		this.replaceInst.add(new ReplaceInfo(replace, with));
-	}
-
-	public void addReplaceInstruction(ReplaceInfo info) {
-		this.replaceInst.add(info);
-	}
-
 	public void process() {
 		System.out.println("Folders:");
 		folders.forEach(f -> System.out.println("\t"+f));
@@ -86,15 +80,15 @@ public class Cobra {
 		filesPath = FileMerger.findAllFiles(folders, files, filesRuleToExclude);
 		filesPath.forEach(f -> System.out.println("\t" + f));
 
-		massReplace();
+		stack.process();
 	}
-
-	private void massReplace() {
-		if(!replaceInst.isEmpty()) {
-			ReplaceExecutor rexec = new ReplaceExecutor(replaceInst);
-			filesPath.forEach(f -> rexec.replace(new SimpleTextReplacer(f)));
-			rexec.shutdown();
-		}
+	
+	public CmdStack getStack(){
+		return this.stack;
+	}
+	
+	public final List<String> getFilesPath(){
+		return filesPath;
 	}
 
 	public void addSubFolders(String path, Collection<String> excludes) {
