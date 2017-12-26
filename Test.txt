@@ -1,9 +1,17 @@
-$TEST_FOLDER = "C:\Users\Riki\Desktop\testcobra"
+$USER_FOLDER = "c:\Users"
+$AA = ["Array*", "XML*"]
+$EXCLUDE_FILES = ["CSV*", $AA]
 
-backup on "C:\Users\Riki\Desktop\testcobra\backup"
+backup on "e:\backup"
 
-use file "*.txt"
+use folder "e:\*\Desktop"
+	sub folder "<$USER_FOLDER>\*\eclipse-workspace" 
+		exclude ".*\.metadata", 
+				".*org.example.*", 
+				".*.recommenders", 
+				".*\.[a-z]+"
+	file "*.java", "*2nd*.pdf" exclude $EXCLUDE_FILES, "Test.java"
 {
-	replace "pera", "pera"
-	replace "melone", "melone"
+	$NOME = "Riki"
+	replace $NOME, "Pavone"
 }
