@@ -116,8 +116,8 @@ public class CustomCobraVisitor extends CobraBaseVisitor<Object> {
 				String value = getVariable(name, ctx.STRING());
 				result = result.replace(toReplace, value);	
 			}while((start = result.indexOf(INNER_VAR_DELIM_START, end)) >= 0);
-		}
-		return result;
+		}		
+		return result.replaceAll("\\\\n", "\n");
 	}
 
 	public String visitAtomic(AtomicContext ctx) {

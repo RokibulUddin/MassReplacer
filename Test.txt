@@ -1,9 +1,7 @@
-$TEST_FOLDER = "e:\Users\ruddin\Desktop\testcobra"
+$TEST_FOLDER = "C:\Users\Riki\Desktop\testcobra"
 
 use folder $TEST_FOLDER file "*.txt"
 {
-	$NOME = "Pavone"
-	$NUOVO_NOME = "<$NOME> Pazzo"
 
-	replace "({H}\d\d):(\d\d):(\d\d)", "hour=${H}, minutes=$2, sec=$3 <$NUOVO_NOME>"
+	replace "\"HOLA\"", "\nViva la vita"
 }

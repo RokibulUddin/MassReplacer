@@ -43,8 +43,7 @@ replacewith: atomic;
 
 string : STRING;
 
-// change string to '"' (~[\r\n"] | '\\"')* '"'
-STRING: '"' .*? '"' {setText(getText().substring(1, getText().length()-1));};
+STRING: '"' (~[\r\n"] | '\\"')* '"' {setText(getText().substring(1, getText().length()-1));};
 ID:	'$'[A-Z_]+  {setText(getText().substring(1, getText().length()));};
 WS: [ \t\r\n] -> skip;
-COMMENT: '#' ~[\r\n]* -> skip ;
+COMMENT: '#' ~[\r?\n]* -> skip ;
