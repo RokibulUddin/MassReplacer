@@ -2,6 +2,7 @@ $USER_FOLDER = "c:\Users"
 $AA = ["Array*", "XML*"]
 $EXCLUDE_FILES = ["CSV*", $AA]
 
+
 backup on "e:\backup"
 
 use folder "e:\*\Desktop"

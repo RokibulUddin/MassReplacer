@@ -24,6 +24,7 @@ import riki.cobra.language.CobraParser.ExcludesContext;
 import riki.cobra.language.CobraParser.ExitContext;
 import riki.cobra.language.CobraParser.FoldersContext;
 import riki.cobra.language.CobraParser.ReplaceContext;
+import riki.cobra.language.CobraParser.ReplacefromContext;
 import riki.cobra.language.CobraParser.StringContext;
 import riki.cobra.language.CobraParser.SubFolderContext;
 
@@ -159,6 +160,16 @@ public class CustomCobraVisitor extends CobraBaseVisitor<Object> {
 		replaceWith = visitAtomic(ctx.replacewith().atomic());
 		info.setReplaceWith(replaceWith);
 		info.setToReplace(toReplace);
+		cobra.getStack().addCmd(new ReplaceCmd(info));
+		return info;
+	}
+	
+	@Override
+	public Object visitReplacefrom(ReplacefromContext ctx) {
+		String from = visitAtomic(ctx.from);
+		String to = visitAtomic(ctx.to);
+		String with = visitAtomic(ctx.replacewith().atomic());
+		ReplaceInfo info = new ReplaceInfo(from + "(\n|\r|\t| |.)*?" + to, with);
 		cobra.getStack().addCmd(new ReplaceCmd(info));
 		return info;
 	}

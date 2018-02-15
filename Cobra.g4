@@ -28,6 +28,7 @@ file: 'file' atomic (',' atomic)* excludes?
 	
 instructions: assignment 
 	|	replace
+	|	replacefrom
 	| 	cmd
 	;
 
@@ -36,6 +37,7 @@ cmd: 'exit' #exit
 	;
 
 replace: 'replace' tofind ',' replacewith ;
+replacefrom: 'replace' 'from' from=atomic 'to' to=atomic 'with' replacewith;
 
 assignment: ID '=' atomic;
 
